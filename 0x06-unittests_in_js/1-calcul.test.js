@@ -72,6 +72,9 @@ describe("calculateNumber", () => {
     it("correctly rounds down a's fractional part with trailing 9s", () => {
       assert.strictEqual(calculateNumber("DIVIDE", 6.49999, 3), 2);
     });
+    it("correctly divides numbers with different signs", () => {
+      assert.strictEqual(calculateNumber("DIVIDE", -6, 3), -2);
+    })
     it("returns the string error when the rounded value of b is 0", () => {
       assert.strictEqual(calculateNumber("DIVIDE", 6.45, 0.012), "Error");
     });

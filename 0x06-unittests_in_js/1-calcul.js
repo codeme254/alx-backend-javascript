@@ -6,13 +6,11 @@
  * @returns {number} - the sum of 'a' and 'b'
  */
 function calculateNumber(type, a, b) {
-  a = Math.round(a);
-  b = Math.round(b);
-  if (type == "SUM") return a + b;
-  if (type == "SUBTRACT") return b - a;
+  if (type == "SUM") return Math.round(a) + Math.round(b);
+  if (type == "SUBTRACT") return Math.round(b) - Math.round(a);
   if (type == "DIVIDE") {
-    if (b == 0) return "Error";
-    return a / b;
+    if (Math.round(b) == 0) return "Error";
+    return Math.round(a) / Math.round(b);
   }
 }
 module.exports = calculateNumber;
