@@ -28,25 +28,25 @@ describe("calculateNumber", () => {
 
   describe("type == SUBTRACT", () => {
     it("correctly subtracts integer b from integer a", () => {
-      assert.strictEqual(calculateNumber("SUBTRACT", 3, 4), 1);
+      assert.strictEqual(calculateNumber("SUBTRACT", 3, 4), -1);
     });
     it("correctly rounds down b's fractional part", () => {
-      assert.strictEqual(calculateNumber("SUBTRACT", 3, 4.4), 1);
+      assert.strictEqual(calculateNumber("SUBTRACT", 3, 4.4), -1);
     });
     it("correctly rounds down a's fractional part", () => {
-      assert.strictEqual(calculateNumber("SUBTRACT", 3.4, 4), 1);
+      assert.strictEqual(calculateNumber("SUBTRACT", 3.4, 4), -1);
     });
     it("correctly rounds up b's fractional part", () => {
-      assert.strictEqual(calculateNumber("SUBTRACT", 3, 4.5), 2);
+      assert.strictEqual(calculateNumber("SUBTRACT", 3, 4.5), -2);
     });
     it("correctly rounds up a's fractional part", () => {
       assert.strictEqual(calculateNumber("SUBTRACT", 3.5, 4), 0);
     });
     it("correctly rounds down b's fractional part with trailing 9s", () => {
-      assert.strictEqual(calculateNumber("SUBTRACT", 3.4, 4.4999999), 1);
+      assert.strictEqual(calculateNumber("SUBTRACT", 3.4, 4.4999999), -1);
     });
     it("correctly rounds down a's fractional part with trailing 9s", () => {
-      assert.strictEqual(calculateNumber("SUBTRACT", 3.49999, 4), 1);
+      assert.strictEqual(calculateNumber("SUBTRACT", 3.49999, 4), -1);
     });
   });
 
@@ -74,7 +74,7 @@ describe("calculateNumber", () => {
     });
     it("correctly divides numbers with different signs", () => {
       assert.strictEqual(calculateNumber("DIVIDE", -6, 3), -2);
-    })
+    });
     it("returns the string error when the rounded value of b is 0", () => {
       assert.strictEqual(calculateNumber("DIVIDE", 6.45, 0.012), "Error");
     });
