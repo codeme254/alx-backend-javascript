@@ -5,14 +5,13 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "mocha tests/**/*.*"
+    "test": "mocha"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "chai": "^4.3.10",
-    "chai-as-promised": "^7.1.1",
     "mocha": "^10.2.0",
     "sinon": "^16.1.0"
   }
