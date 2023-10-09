@@ -1,65 +1,85 @@
 const assert = require("assert");
 const calculateNumber = require("./1-calcul");
 
-describe("calculateNumber", function () {
-  describe("SUM", function () {
-    it("adds whole numbers", function () {
-      assert.strictEqual(calculateNumber(1, 2, "SUM"), 3);
+describe("calculateNumber", () => {
+  describe("type == SUM", () => {
+    it("correctly adds whole numbers a and b", () => {
+      assert.strictEqual(calculateNumber("SUM", 3, 4), 7);
     });
-    it("left number decimal part less than 5", function () {
-      assert.strictEqual(calculateNumber(1.2, 2, "SUM"), 3);
+    it("correctly rounds down b's fractional part", () => {
+      assert.strictEqual(calculateNumber("SUM", 3, 4.4), 7);
     });
-    it("right number decimal part less than 5", function () {
-      assert.strictEqual(calculateNumber(1, 2.2, "SUM"), 3);
+    it("correctly rounds down a's fractional part", () => {
+      assert.strictEqual(calculateNumber("SUM", 3.4, 4), 7);
     });
-    it("left number decimal part greater than 5", function () {
-      assert.strictEqual(calculateNumber(1.7, 2, "SUM"), 4);
+    it("correctly rounds up b's fractional part", () => {
+      assert.strictEqual(calculateNumber("SUM", 3, 4.5), 8);
     });
-    it("right number with decimal part greater than 5", function () {
-      assert.strictEqual(calculateNumber(1, 2.7, "SUM"), 4);
+    it("correctly rounds up a's fractional part", () => {
+      assert.strictEqual(calculateNumber("SUM", 3.5, 4), 8);
     });
-    it("left number with trailing 9s", function () {
-      assert.strictEqual(calculateNumber(1.49999999, 2, "SUM"), 3);
+    it("correctly rounds down b's fractional part with trailing 9s", () => {
+      assert.strictEqual(calculateNumber("SUM", 3.4, 4.4999999), 7);
     });
-    it("right number with trailing 9s", function () {
-      assert.strictEqual(calculateNumber(1, 2.499999, "SUM"), 3);
-    });
-  });
-  describe("SUBTRACT", function () {
-    it("whole numbers", function () {
-      assert.strictEqual(calculateNumber(5, 3, "SUBTRACT"), 2);
-    });
-    it("left number with fractional part less than .5", function () {
-      assert.strictEqual(calculateNumber(5.2, 3, "SUBTRACT"), 2);
-    });
-    it("right number with the fractional part less than .5", function () {
-      assert.strictEqual(calculateNumber(5.2, 3.2, "SUBTRACT"), 2);
-    });
-    it("left number with the decimal part greater than or equal to .5", function () {
-      assert.strictEqual(calculateNumber(5.6, 3, "SUBTRACT"), 3);
-    });
-    it("right number with fractional part greater than or equal to .5", function () {
-      assert.strictEqual(calculateNumber(5, 2.6, "SUBTRACT"), 2);
+    it("correctly rounds down a's fractional part with trailing 9s", () => {
+      assert.strictEqual(calculateNumber("SUM", 3.49999, 4), 7);
     });
   });
-  describe("DIVIDE", function () {
-    it("whole numbers", function () {
-      assert.strictEqual(calculateNumber(6, 3, "DIVIDE"), 2);
+
+  describe("type == SUBTRACT", () => {
+    it("correctly subtracts integer b from integer a", () => {
+      assert.strictEqual(calculateNumber("SUBTRACT", 3, 4), -1);
     });
-    it("left number with the decimal part less than .5", function () {
-      assert.strictEqual(calculateNumber(6.2, 3, "DIVIDE"), 2);
+    it("correctly rounds down b's fractional part", () => {
+      assert.strictEqual(calculateNumber("SUBTRACT", 3, 4.4), -1);
     });
-    it("right number with the decimal part less than .5", function () {
-      assert.strictEqual(calculateNumber(6, 3.2, "DIVIDE"), 2);
+    it("correctly rounds down a's fractional part", () => {
+      assert.strictEqual(calculateNumber("SUBTRACT", 3.4, 4), -1);
     });
-    it("left number with fractional part greater than 5", function () {
-      assert.strictEqual(calculateNumber(5.8, 3, "DIVIDE"), 2);
+    it("correctly rounds up b's fractional part", () => {
+      assert.strictEqual(calculateNumber("SUBTRACT", 3, 4.5), -2);
     });
-    it("right number with fractional part greater than .5", function () {
-      assert.strictEqual(calculateNumber(6, 2.8, "DIVIDE"), 2);
+    it("correctly rounds up a's fractional part", () => {
+      assert.strictEqual(calculateNumber("SUBTRACT", 3.5, 4), 0);
     });
-    it("right number rounds to 0", function () {
-      assert.strictEqual(calculateNumber(6, 0.2, "DIVIDE"), "Error");
+    it("correctly rounds down b's fractional part with trailing 9s", () => {
+      assert.strictEqual(calculateNumber("SUBTRACT", 3.4, 4.4999999), -1);
+    });
+    it("correctly rounds down a's fractional part with trailing 9s", () => {
+      assert.strictEqual(calculateNumber("SUBTRACT", 3.49999, 4), -1);
+    });
+  });
+
+  describe("type == DIVIDE", () => {
+    it("correctly divides integer a and b", () => {
+      assert.strictEqual(calculateNumber("DIVIDE", 6, 3), 2);
+    });
+    it("correctly rounds down b's fractional part", () => {
+      assert.strictEqual(calculateNumber("DIVIDE", 6, 3.4), 2);
+    });
+    it("correctly rounds down a's fractional part", () => {
+      assert.strictEqual(calculateNumber("DIVIDE", 6.4, 3), 2);
+    });
+    it("correctly rounds up b's fractional part", () => {
+      assert.strictEqual(calculateNumber("DIVIDE", 6, 2.5), 2);
+    });
+    it("correctly rounds up a's fractional part", () => {
+      assert.strictEqual(calculateNumber("DIVIDE", 5.5, 3), 2);
+    });
+    it("correctly rounds down b's fractional part with trailing 9s", () => {
+      assert.strictEqual(calculateNumber("DIVIDE", 6, 3.4999999), 2);
+    });
+    it("correctly rounds down a's fractional part with trailing 9s", () => {
+      assert.strictEqual(calculateNumber("DIVIDE", 6.49999, 3), 2);
+    });
+    it("correctly divides numbers with different signs", () => {
+      assert.strictEqual(calculateNumber("DIVIDE", -6, 3), -2);
+    });
+    it("returns the string error when the rounded value of b is 0", () => {
+      assert.strictEqual(calculateNumber("DIVIDE", 6.45, 0.012), "Error");
+    });
+    it("returns the string error when b is 0", () => {
+      assert.strictEqual(calculateNumber("DIVIDE", 6.44, 0), "Error");
     });
   });
 });
